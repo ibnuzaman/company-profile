@@ -17,6 +17,14 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahModal">
                             <i class="fas fa-plus"></i>Add
                         </button>
+
+                        <!-- Notif succes tambah kategori -->
+                        <?php if (session('succes')) : ?>
+                            <div class="alert alert-success" role="alert">
+                                Berhasil di tambahkan!
+                                <?php session('succes'); ?>
+                            </div>
+                        <?php endif; ?>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>

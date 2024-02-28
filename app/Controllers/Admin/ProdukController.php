@@ -37,11 +37,12 @@ class ProdukController extends BaseController
         $slug = url_title($this->request->getPost('nama_kategori'), '-', TRUE);
 
         $data = [
-            'nama_kategori' => esc($this->request->getPost('nama_kategori'))
+            'nama_kategori' => esc($this->request->getPost('nama_kategori')),
+            'slug_kategori' => $slug,
         ];
 
         $this->KategoriModel->insert($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('succes', 'Data Kategori Berhasil ditambahkan');
     }
 }
