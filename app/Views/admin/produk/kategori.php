@@ -19,10 +19,9 @@
                         </button>
 
                         <!-- Notif succes tambah kategori -->
-                        <?php if (session('succes')) : ?>
+                        <?php if (session()->getFlashdata('success')) : ?>
                             <div class="alert alert-success" role="alert">
-                                Berhasil di tambahkan!
-                                <?php session('succes'); ?>
+                                <?= session()->getFlashdata('success'); ?>
                             </div>
                         <?php endif; ?>
                         <table id="datatablesSimple">
@@ -48,8 +47,8 @@
                                             <?= date('d/m/Y H:i:s', strtotime($kategori->tanggal_input)); ?>
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?')"><i class="fas fa-trash"></i> Delete</a>
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ubahModal" <?= $kategori->id_kategori; ?>><i class="fas fa-edit"></i> Edit</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal" <?= $kategori->id_kategori; ?>><i class="fas fa-edit"></i> Delete</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -66,6 +65,7 @@
             </div>
         </div>
     </main>
+
     <!-- Modal -->
     <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -90,5 +90,64 @@
             </div>
         </div>
     </div>
+
+    <!-- Ubah Modal -->
+    <?php foreach ($daftar_kategori as $kategori) : ?>
+        <div class="modal fade" id="ubahModal" <?= $kategori->id_kategori; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fas fa-edit"></i>Ubah Kategori</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="<?= base_url('daftar-kategori/ubah' . $kategori->id_kategori); ?>" method="post">
+                            <?= csrf_field(); ?>
+                            <div class="mb-3">
+                                <label for="nama_kategori">Nama Kategori</label>
+                                <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" required>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <?php endforeach; ?>
+
+
+    <!-- Hapus Modal -->
+    <?php foreach ($daftar_kategori as $kategori) : ?>
+        <div class="modal fade" id="hapusModal" <?= $kategori->id_kategori; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fas fa-edit"></i>Hapus Kategori</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="<?= base_url('daftar-kategori/hapus' . $kategori->id_kategori); ?>" method="post">
+                        <div class="modal-body">
+                            <?= csrf_field(); ?>
+                            <input type="hidden" name="_method" value="DELETE">
+
+                            <p>Yakin Data Kategori <?= $kategori->nama_kategori; ?> dihapus ?</p>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <?php endforeach; ?>
+
 
     <?= $this->endSection(); ?>

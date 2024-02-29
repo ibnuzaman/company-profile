@@ -45,4 +45,44 @@ class ProdukController extends BaseController
 
         return redirect()->back()->with('succes', 'Data Kategori Berhasil ditambahkan');
     }
+
+    public function update($id_kategori)
+    {
+        $slug = url_title($this->request->getPost('nama_kategori'), '-', TRUE);
+
+        $data = [
+            'nama_kategori' => esc($this->request->getPost('nama_kategori')),
+            'slug_kategori' => $slug,
+        ];
+
+        $this->KategoriModel->update($id_kategori, $data);
+
+        return redirect()->back()->with('succes', 'Data Kategori Berhasil diubah');
+    }
+
+    public function delete($id_kategori)
+    {
+        $this->KategoriModel->delete($id_kategori);
+        return redirect()->back()->with('success', 'Data Kategori Berhasil Dihapus');
+    }
+
+    // public function edit($id)
+    // {
+    //     $news = new KategoriModel();
+    //     $data['news'] = $news->where('id_kategori', $id)->first();
+
+    //     $validation = \Config\Services::validation();
+    //     $validation->setRules([
+    //         'id_kategori' => 'required',
+    //         'nama_kategori' => 'required'
+    //     ]);
+    //     $isDataValid = $validation->withRequest($this->request)->run();
+
+    //     if ($isDataValid) {
+    //         $news->update($id, [
+    //             'nama_kategori' => $this->getPost('nama_kategori')
+    //         ]);
+    //         return redirect()->back();
+    //     }
+    // }
 }
