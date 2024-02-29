@@ -14,17 +14,17 @@ class ProdukController extends BaseController
             'title' => 'Daftar Produk',
 
         ];
-        return view('admin/produk/index.php', $data);
+        return view('admin/produk/index', $data);
     }
 
     // daftar kategori produk
     public function kategori()
     {
         $data = [
-            'title' => 'Daftar Kategori',
-            'daftar_kategori' => $this->KategoriModel->findAll()
+            'title' => 'Daftar Kategori Produk',
+            'daftar_kategori' => $this->KategoriModel->orderBy('id_kategori', 'DESC')->findAll()
         ];
-        return view('admin/produk/kategori.php', $data);
+        return view('admin/produk/kategori', $data);
     }
 
     public function store()

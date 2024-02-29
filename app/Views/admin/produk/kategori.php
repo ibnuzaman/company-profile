@@ -37,26 +37,19 @@
                                 <?php $no = 1; ?>
                                 <?php foreach ($daftar_kategori as $kategori) : ?>
                                     <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $kategori->nama_kategori ?></td>
+                                        <td><?= date('d/m/Y H:i:s', strtotime($kategori->tanggal_input)); ?></td>
                                         <td>
-                                            <?= $no++ ?>
-                                        </td>
-                                        <td>
-                                            <?= $kategori->nama_kategori ?>
-                                        </td>
-                                        <td>
-                                            <?= date('d/m/Y H:i:s', strtotime($kategori->tanggal_input)); ?>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ubahModal" <?= $kategori->id_kategori; ?>><i class="fas fa-edit"></i> Edit</button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal" <?= $kategori->id_kategori; ?>><i class="fas fa-edit"></i> Delete</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ubahModal<?= $kategori->id_kategori; ?>"><i class="fas fa-edit"></i> Edit</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#hapusModal<?= $kategori->id_kategori; ?>"><i class="fas fa-edit"></i> Delete</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
+
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- </p> -->
                 </div>
             </div>
             <div style="height: 100vh"></div>
@@ -93,7 +86,7 @@
 
     <!-- Ubah Modal -->
     <?php foreach ($daftar_kategori as $kategori) : ?>
-        <div class="modal fade" id="ubahModal" <?= $kategori->id_kategori; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="ubahModal<?= $kategori->id_kategori; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,9 +96,10 @@
                     <div class="modal-body">
                         <form action="<?= base_url('daftar-kategori/ubah' . $kategori->id_kategori); ?>" method="post">
                             <?= csrf_field(); ?>
+                            <input type="hidden" name="_method" value="PUT">
                             <div class="mb-3">
                                 <label for="nama_kategori">Nama Kategori</label>
-                                <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" required>
+                                <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" value="<?= $kategori->nama_kategori; ?>">
                             </div>
                     </div>
                     <div class="modal-footer">
@@ -122,7 +116,7 @@
 
     <!-- Hapus Modal -->
     <?php foreach ($daftar_kategori as $kategori) : ?>
-        <div class="modal fade" id="hapusModal" <?= $kategori->id_kategori; ?> tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="hapusModal<?= $kategori->id_kategori; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
