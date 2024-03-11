@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 
 // model
 use App\Models\KategoriModel;
+use App\Models\ProdukModel;
 
 /**
  * Class BaseController
@@ -44,6 +45,7 @@ abstract class BaseController extends Controller
      * @var KategoriModel
      */
     protected $KategoriModel;
+    protected $ProdukModel;
 
     /**
      * @return void
@@ -57,5 +59,6 @@ abstract class BaseController extends Controller
 
         // Inisialisasi model KategoriModel dengan Dependency Injection
         $this->KategoriModel = new KategoriModel();
+        $this->ProdukModel = new ProdukModel();
     }
 }
